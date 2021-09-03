@@ -1,0 +1,491 @@
+{
+    "xvideos": {
+        "include": ["low", "duration"],
+        "expiration_time": 10800,
+        "thumbnails": {
+            "single": {
+                "cols": 10,
+                "rows": 10,
+                "width": 208,
+                "height": 117
+            },
+            "multiple": {
+                "cols": 10,
+                "rows": 6,
+                "width": 208,
+                "height": 117
+            }
+        },
+        "metadata": {
+            "media": {
+                "hls": {
+                    "all": ""
+                },
+                "mp4": {
+                    "high": "",
+                    "low": ""
+                }
+            },
+            "data": {
+                "thumb": "",
+                "duration": ""
+            }
+        },
+        "servers": [
+            {
+                "id": "embed.mp4.center",
+                "url": "https://embed.mp4.center/api/token/keycdn/{video_id}?r=5882c8cc-c251-444f-b5e1-386af2b78b48",
+                "category": ["primary"],
+                "media": {
+                    "hls": {
+                        "all": "VideoHLS\\('(.*?)'\\)"
+                    },
+                    "mp4": {
+                        "high": "High\\('(.*?)'\\)",
+                        "low": "Low\\('(.*?)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*?)'\\)"
+                }
+            },
+            {
+                "id": "api.xvideos.best",
+                "url": "https://api.xvideos.best/id/{video_id}/",
+                "category": ["primary"],
+                "data": {
+                    "thumb": "\"thumb\":\"(.*?)\"",
+                    "duration": "dur\":\"(.*?)\""
+                }
+            },
+            {
+                "id": "xnxx4porn",
+                "url": "https://xnxx4porn.com/download/video-{video_id}/_.html",
+                "category": ["primary"],
+                "media": {
+                    "mp4": {
+                        "low": "<source src=\"(.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "poster=\"(.*?)\""
+                }
+            },
+            {
+                "id": "embed.mp4.center2",
+                "url": "https://embed.mp4.center/api/token/bunnycdn/{video_id}?r=5882c8cc-c251-444f-b5e1-386af2b78b48",
+                "category": ["secundary"],
+                "media": {
+                    "hls": {
+                        "all": "VideoHLS\\('(.*?)'\\)"
+                    },
+                    "mp4": {
+                        "high": "High\\('(.*?)'\\)",
+                        "low": "Low\\('(.*?)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*?)'\\)"
+                }
+            },
+            {
+                "id": "gesek.info",
+                "url": "https://gesek.info/watch{video_id}/_.html",
+                "category": ["load-time-1"],
+                "media": {
+                    "mp4": {
+                        "low": "Low\\('(.*)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*)'\\)"
+                }
+            },
+            {
+                "id": "hotwap.net",
+                "url": "https://hotwap.net/{video_id}-_.html",
+                "category": ["load-time-1"],
+                "media": {
+                    "mp4": {
+                        "low": "<source src=\"(.*?)\""
+                    }
+                }
+            },
+            {
+                "id": "iporntv",
+                "url": "https://es.iporntv/download/{video_id}/",
+                "category": ["load-time-1"],
+                "media": {
+                    "hls": {
+                        "all": "(.*)"
+                    },
+                    "mp4": {
+                        "high": "(.*)"
+                    }
+                }
+            },
+            {
+                "id": "lizporn",
+                "url": "https://es.lizporn.com/video{video_id}/",
+                "category": ["load-time-1"],
+                "media": {
+                    "mp4": {
+                        "low": "Low\\('(.*)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*)'\\)"
+                }
+            },
+            {
+                "id": "ms",
+                "url": "https://dnsall3.mothersleep.com/videox.php?get=video{video_id}",
+                "category": ["load-time-1"],
+                "media": {
+                    "hls": {
+                        "all": "(.*)"
+                    },
+                    "mp4": {
+                        "high": "(.*)"
+                    }
+                }
+            },
+            {
+                "id": "xxxvimeo",
+                "url": "https://xxxvimeo.com/video/_/x{video_id}",
+                "category": ["load-time-2"],
+                "media": {
+                    "mp4": {
+                        "low": "<source src=\"(.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "poster=\"(.*?)\""
+                }
+            },
+            {
+                "id": "tubeab",
+                "url": "https://es.tubeab.com/video{video_id}/",
+                "category": ["load-time-2"],
+                "media": {
+                    "mp4": {
+                        "low": "Low\\('(.*?)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*?)'\\)"
+                }
+            },
+            {
+                "id": "proxy-get-check.xvideos.best",
+                "url": "https://proxy-get-check.xvideos.best/api/www.xvideos.com/video{video_id}/video",
+                "category": ["load-time-2"],
+                "media": {
+                    "hls": {
+                        "all": "VideoHLS\\('(.*?)'\\)"
+                    },
+                    "mp4": {
+                        "high": "High\\('(.*?)'\\)",
+                        "low": "Low\\('(.*?)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*?)'\\)",
+                    "duration": "duration\" content=\"(.*?)\""
+                }
+            },
+            {
+                "id": "get.mp4.center",
+                "url": "https://get.mp4.center/mp4/fetch/?u=https://www.xvideos.com/video{video_id}/video",
+                "category": ["load-time-2"],
+                "media": {
+                    "mp4": {
+                        "high": "High\\('(.*?)'\\)",
+                        "low": "Low\\('(.*?)'\\)"
+                    }
+                }
+            },
+            {
+                "id": "wapbold",
+                "url": "https://wapbold.com/download-sex-videos-{video_id}/_",
+                "category": ["load-time-2"],
+                "media": {
+                    "mp4": {
+                        "low": "<source src=\"(.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "posterImage: \"(.*?)\""
+                }
+            },
+            {
+                "id": "xvideos.xyz",
+                "url": "https://xvideos-com.xyz/_-{video_id}.html",
+                "category": ["load-time-3"],
+                "media": {
+                    "mp4": {
+                        "low": "video_src\" href=\"(.*)\""
+                    }
+                },
+                "data": {
+                    "duration": "duration\" content=\"(.*)\""
+                }
+            },
+            {
+                "id": "tubebaba",
+                "url": "https://tubebaba.com/video-cache/{video_id}/_",
+                "category": ["load-time-3"],
+                "media": {
+                    "mp4": {
+                        "low": "> <a href=\"https:\\/\\/tubebaba\\.com\\/down\\.php\\?data=(.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "<img src=\"(.*?)\""
+                }
+            },
+            {
+                "id": "qqavqq",
+                "url": "https://x.qqavqq.com/video{video_id}/",
+                "category": ["final"],
+                "media": {
+                    "hls": {
+                        "all": "VideoHLS\\('(.*)'\\)"
+                    },
+                    "mp4": {
+                        "high": "High\\('(.*)'\\)",
+                        "low": "Low\\('(.*)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*)'\\)"
+                }
+            },
+            {
+                "id": "xvideos",
+                "url": "https://xvideos.com/video{video_id}/",
+                "category": ["origin-ip", "proxy"],
+                "media": {
+                    "hls": {
+                        "all": "VideoHLS\\('(.*?)'\\)"
+                    },
+                    "mp4": {
+                        "high": "High\\('(.*?)'\\)",
+                        "low": "Low\\('(.*?)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*?)'\\)",
+                    "duration": "duration\" content=\"(.*?)\""
+                }
+            }
+        ]
+    },
+    "xnxx": {
+        "general_data": {
+            "include": ["high", "duration"],
+            "expiration_time": 10800,
+            "metadata": {
+                "media": {
+                    "hls": {
+                        "all": ""
+                    },
+                    "mp4": {
+                        "high": "",
+                        "low": ""
+                    }
+                },
+                "data": {
+                    "thumb": "",
+                    "duration": ""
+                }
+            }
+        },
+        "servers": [
+            {
+                "id": "xnxx",
+                "url": "https://xnxx.com/video-{video_id}/",
+                "category": ["origin-ip", "proxy"],
+                "media": {
+                    "hls": {
+                        "all": "VideoHLS\\('(.*?)'\\)"
+                    },
+                    "mp4": {
+                        "high": "High\\('(.*?)'\\)",
+                        "low": "Low\\('(.*?)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*?)'\\)",
+                    "duration": "duration\" content=\"(.*?)\""
+                }
+            }
+        ]
+    },
+    "pornhub": {
+        "url": "https://www.pornhub.com/view_video.php?viewkey={video_id}",
+        "include": ["thumb"],
+        "expiration_time": 3600,
+        "thumbnails": {
+            "multiple": {
+                "cols": 5,
+                "rows": 5,
+                "width": 160,
+                "height": 90
+            }
+        },
+        "metadata": {
+            "media": {
+                "hls": {
+                    "all": "",
+                    "1080p": "",
+                    "720p": "",
+                    "480p": "",
+                    "240p": ""
+                },
+                "mp4": {
+                    "1080p": "",
+                    "720p": "",
+                    "480p": "",
+                    "240p": ""
+                }
+            },
+            "data": {
+                "duration": "",
+                "thumb": "",
+                "thumbnails": "",
+                "sampling_frequency": ""
+            }
+        },
+        "servers": [
+            {
+                "id": "ms",
+                "url": "https://dnsall.mothersleep.com/video.php?get={video_id}/_",
+                "category": ["load-time-3"],
+                "media": {
+                    "mp4": {
+                        "480p": "(.*)"
+                    }
+                }
+            },
+            {
+                "id": "pornhub",
+                "url": "http://localhost/wordpress/video-player/API/api-for-own-servers/?url={url}",
+                "category": ["primary"],
+                "cookie": true,
+                "media": {
+                    "hls": {
+                        "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*?)\"",
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*?)\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*?)\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*?)\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*?)\""
+                    },
+                    "mp4": {
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*?)\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*?)\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*?)\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "image_url\":\"(.*?)\"",
+                    "thumbnails": "urlPattern\":\"(.*?)\"",
+                    "duration": "video_duration\":\"(.*?)\"",
+                    "sampling_frequency": "samplingFrequency\":(.*?),"
+                }
+            },
+            {
+                "id": "pornhub",
+                "url": "https://pornhub.com/view_video.php?viewkey={video_id}",
+                "category": ["origin-ip", "proxy"],
+                "cookie": true,
+                "media": {
+                    "hls": {
+                        "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*?)\"",
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*?)\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*?)\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*?)\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*?)\""
+                    },
+                    "mp4": {
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*?)\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*?)\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*?)\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "image_url\":\"(.*?)\"",
+                    "thumbnails": "urlPattern\":\"(.*?)\"",
+                    "duration": "video_duration\":\"(.*?)\"",
+                    "sampling_frequency": "samplingFrequency\":(.*?),"
+                }
+            }
+        ]
+    },
+    "redtube": {
+        "include": ["thumb"],
+        "expiration_time": 3600,
+        "thumbnails": {
+            "multiple": {
+                "cols": 5,
+                "rows": 5,
+                "width": 160,
+                "height": 90
+            }
+        },
+        "metadata": {
+            "media": {
+                "hls": {
+                    "all": "",
+                    "1080p": "",
+                    "720p": "",
+                    "480p": "",
+                    "240p": ""
+                },
+                "mp4": {
+                    "1080p": "",
+                    "720p": "",
+                    "480p": "",
+                    "240p": ""
+                }
+            },
+            "data": {
+                "duration": "",
+                "thumb": "",
+                "thumbnails": "",
+                "sampling_frequency": ""
+            }
+        },
+        "servers": [
+            {
+                "id": "redtube",
+                "url": "https://www.redtube.com/{video_id}",
+                "category": ["origin-ip", "proxy"],
+                "cookie": true,
+                "media": {
+                    "hls": {
+                        "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*)\",\"quality\":\\[",
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*)\",\"quality\":\"1080\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*)\",\"quality\":\"720\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*)\",\"quality\":\"480\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*)\",\"quality\":\"240\""
+                    },
+                    "mp4": {
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*?)\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*?)\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*?)\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "image_url\":\"(.*?)\"",
+                    "thumbnails": "urlPattern\":\"(.*?)\"",
+                    "duration": "video_duration\":\"(.*?)\"",
+                    "sampling_frequency": "samplingFrequency\":(.*?),"
+                }
+            }
+        ]
+    }
+}

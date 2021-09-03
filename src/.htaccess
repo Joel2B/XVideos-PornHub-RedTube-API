@@ -1,0 +1,10 @@
+RewriteEngine On
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+# redirects to shorten
+RewriteRule ^vtt/(.*)$ ./inc/vtt/index.php?data=$1
+RewriteRule ^redirect/(.*)$ ./inc/redirect.php?data=$1
+# redirect all to the root
+RewriteRule ^(?!.*(vtt|debug|redirect)).* index.php [NC,L,QSA]
