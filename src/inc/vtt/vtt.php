@@ -61,7 +61,7 @@ class Vtt {
                     $thumb_url = $this->thumb_base_url . $i . '.jpg';
                 }
                 if ($this->encode) {
-                    $path      = dirname($_SERVER['PHP_SELF']);
+                    $path      = HOST . dirname($_SERVER['PHP_SELF']);
                     $path      = explode('/', $path);
                     $path      = array_splice($path, 0, -2);
                     $path      = implode('/', $path);

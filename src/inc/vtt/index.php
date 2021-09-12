@@ -1,5 +1,6 @@
 <?php
 
+include '../../config.php';
 include 'vtt.php';
 include '../encryption.php';
 
