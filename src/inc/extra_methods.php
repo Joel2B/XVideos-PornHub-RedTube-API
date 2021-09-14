@@ -174,7 +174,7 @@ class Extra_methods {
         $thumb       = substr($thumb, 0, strrpos($thumb, '/') + 1);
         $duration    = $this->data['duration'];
         $total_links = 0;
-        if ($duration <= 60) {
+        if ($duration <= 60 || Utils::get_http_code($thumb . 'mozaiquemin_0.jpg') === 404) {
             $thumb .= 'mozaiquefull.jpg';
             $type_thumb = 'single';
         } else {

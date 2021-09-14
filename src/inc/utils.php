@@ -108,6 +108,22 @@ class Utils {
         return $result;
     }
 
+    public static function get_http_code($url) {
+        $ch      = curl_init($url);
+        $options = [
+            CURLOPT_HEADER         => true,
+            CURLOPT_NOBODY         => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => CONNECTTIMEOUT,
+            CURLOPT_TIMEOUT        => TIMEOUT
+        ];
+        curl_setopt_array($ch, $options);
+        curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return $http_code;
+    }
+
     public static function match($regex, $content) {
         preg_match('#' . $regex . '#', $content, $match);
         return $match[1] ?? null;
