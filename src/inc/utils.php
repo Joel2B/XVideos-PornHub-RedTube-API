@@ -42,6 +42,7 @@ class Utils {
         curl_setopt_array($ch, $options);
         curl_exec($ch);
         $redirect_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+        curl_close($ch);
         return $redirect_url;
     }
 
