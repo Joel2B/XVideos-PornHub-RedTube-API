@@ -1,5 +1,6 @@
 {
     "xvideos": {
+        "video_id": "(?:video|\\/)(\\d+)",
         "include": ["low", "duration"],
         "expiration_time": 10800,
         "thumbnails": {
@@ -335,6 +336,7 @@
         ]
     },
     "pornhub": {
+        "video_id": "(?:=|\\/)(ph\\w+)",
         "url": "https://www.pornhub.com/view_video.php?viewkey={video_id}",
         "include": ["thumb"],
         "expiration_time": 3600,
@@ -437,6 +439,7 @@
         ]
     },
     "redtube": {
+        "video_id": "(?:\\/|=)(\\d+)",
         "include": ["thumb"],
         "expiration_time": 3600,
         "thumbnails": {

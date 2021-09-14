@@ -15,21 +15,45 @@ class Video {
     public $extra_steps;
     public $cache;
 
-    public function __construct(
-        $site_id,
-        $video_id
-    ) {
-        $this->site_id  = $site_id;
-        $this->video_id = $video_id;
-        // load all the information from the websites
-        $this->sources = json_decode(file_get_contents(__DIR__ . '/../servers/sources.json'), true);
-        $this->data    = $this->sources[$this->site_id];
+    public function __construct($data) {
+        if (isset($data['data'])) {
+            $this->site_id = $this->get_site_id($data['data']);
+            if (!isset($this->site_id)) {
+                die();
+            }
+            $this->load_sources();
+            $this->video_id = $this->get_video_id($this->data['video_id'], $data['data']);
+            if (!isset($this->video_id)) {
+                die();
+            }
+        } else {
+            $this->site_id = $data['site_id'];
+            $this->load_sources();
+            $this->video_id = $data['video_id'];
+        }
         // load metadata
         $this->metadata = $this->data['metadata'];
         // extra steps to get the data
-        $this->extra_steps = new Extra_steps($site_id);
+        $this->extra_steps = new Extra_steps($this->site_id);
         // data caching
-        $this->cache = new Cache($site_id, $video_id, $this->data['expiration_time']);
+        $this->cache = new Cache($this->site_id, $this->video_id, $this->data['expiration_time']);
+    }
+
+    public function load_sources() {
+        // load all the information from the websites
+        $this->sources = json_decode(file_get_contents(__DIR__ . '/../servers/sources.json'), true);
+        if (!isset($this->sources[$this->site_id])) {
+            die();
+        }
+        $this->data = $this->sources[$this->site_id];
+    }
+
+    public function get_site_id($data) {
+        return Utils::match('(?:\.|^)(\w+)\..*\/', $data);
+    }
+
+    public function get_video_id($regex, $data) {
+        return Utils::match($regex, $data);
     }
 
     public function get_data() {
@@ -56,11 +80,11 @@ class Video {
         $missing_data = [];
         // add all the data that need to be filled out
         Utils::get_deeper_keys($this->metadata, $missing_data);
-       _msg::msg('missing_data', $missing_data);
+        _msg::msg('missing_data', $missing_data);
 
         // cycle all the categories until we get all the data
         foreach ($categories as $key => $category) {
-           _msg::msg("Category: $key - $category");
+            _msg::msg("Category: $key - $category");
             // get the content of all sites in a category
             $content  = $this->get_links_content($category);
             $continue = false;
@@ -118,7 +142,7 @@ class Video {
 
             LoadTime::end('lc');
 
-           _msg::msg('missing_data', $missing_data);
+            _msg::msg('missing_data', $missing_data);
             if (Utils::in_array_any($this->data['include'], $missing_data)) {
                 $continue = true;
             }
@@ -167,7 +191,7 @@ class Video {
             }
             $urls[$server_index] = $url;
 
-           _msg::msg('URL', "<a style='color: #0000ee' target='_blank' href='$url'>$url</a>", false);
+            _msg::msg('URL', "<a style='color: #0000ee' target='_blank' href='$url'>$url</a>", false);
         }
         return Utils::get_multiple_urls($urls, $cookie);
     }

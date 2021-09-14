@@ -18,15 +18,17 @@ header('Content-Type: application/json');
 include 'config.php';
 include 'inc/video.php';
 
-if (
-    !isset($_GET['site_id']) || empty($_GET['site_id']) ||
-    !isset($_GET['video_id']) || empty($_GET['video_id'])
-) {
-    die('{}');
+$data = [];
+
+if (!empty($_GET['data'])) {
+    $data['data'] = $_GET['data'];
+} else if (!empty($_GET['site_id']) && !empty($_GET['video_id'])) {
+    $data['site_id']  = $_GET['site_id'];
+    $data['video_id'] = $_GET['video_id'];
+} else {
+    die();
 }
 
-$site_id  = $_GET['site_id'];
-$video_id = $_GET['video_id'];
-$video    = new Video($site_id, $video_id);
-$data     = $video->get_links();
+$video = new Video($data);
+$data  = $video->get_links();
 echo json_encode($data);
