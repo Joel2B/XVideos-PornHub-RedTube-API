@@ -108,7 +108,7 @@ class Utils {
         return $result;
     }
 
-    public static function get_url($regex, $content) {
+    public static function match($regex, $content) {
         preg_match('#' . $regex . '#', $content, $match);
         return $match[1] ?? null;
     }

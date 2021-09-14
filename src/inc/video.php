@@ -81,7 +81,7 @@ class Video {
                                 $content = $this->extra_steps->new_content;
                             }
                             $data = &$this->metadata['media'][$format_index][$quality_index];
-                            $url  = Utils::get_url($quality, $content);
+                            $url  = Utils::match($quality, $content);
                             $url  = Utils::clear_url($url);
                             if (!Utils::is_url($url)) {
                                 Utils::add_missing_data($data, $quality_index, $missing_data);
@@ -103,7 +103,7 @@ class Video {
                         }
 
                         $data = &$this->metadata['data'][$data_index];
-                        $url  = Utils::get_url($video_data, $content);
+                        $url  = Utils::match($video_data, $content);
                         $url  = Utils::clear_url($url);
                         if ($url == '') {
                             Utils::add_missing_data($data, $data_index, $missing_data);
