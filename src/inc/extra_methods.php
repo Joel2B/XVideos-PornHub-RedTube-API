@@ -46,16 +46,21 @@ class Extra_methods {
     public function redtube() {
         LoadTime::start($this->data);
         // this avoids making more requests
-        if ($this->new_content == null || $this->tmp != $this->data) {
-            preg_match('/hls","videoUrl":"(.*?)"/', $this->full_content, $link);
-            $format = 'hls';
-            if ($this->data == 'mp4') {
-                $format = 'mp4';
-            }
-            $link              = str_replace(['\/', 'hls'], ['/', $format], $link[1]);
-            $this->new_content = Utils::get_url_content($link, true);
-            $this->tmp         = $this->data;
+        if ($this->tmp == $this->data) {
+            return;
         }
+
+        if (!preg_match('/hls","videoUrl":"(.*?)"/', $this->full_content, $link)) {
+            return;
+        }
+
+        $format = 'hls';
+        if ($this->data == 'mp4') {
+            $format = 'mp4';
+        }
+        $link              = str_replace(['\/', 'hls'], ['/', $format], $link[1]);
+        $this->new_content = Utils::get_url_content($link, true);
+        $this->tmp         = $this->data;
         LoadTime::end($this->data);
     }
 
@@ -64,40 +69,42 @@ class Extra_methods {
 
         LoadTime::start('mothersleep');
 
-        if (preg_match('/source/', $this->full_content, $match)) {
-            if ($this->data == 'hls' && preg_match('/src="(.*m3u8.*?)"/', $this->full_content, $match)) {
+        if (!preg_match('/source/', $this->full_content, $match)) {
+            return;
+        }
+
+        if ($this->data == 'hls' && preg_match('/src="(.*m3u8.*?)"/', $this->full_content, $match)) {
+            $this->new_content = $match[1];
+        } else if ($this->data == 'mp4' && preg_match('/src="(.*mp4.*?)"/', $this->full_content, $match)) {
+            $this->new_content = $match[1];
+        } else {
+            // check if the video source is encoded
+            if (!preg_match('/t">\s+(.*?)\s+var/', $this->full_content, $raw_variables)) {
+                return;
+            }
+
+            preg_match_all('/var (.*?=".*?");/', $raw_variables[1], $parsed_variable);
+            $vars = [];
+
+            foreach ($parsed_variable[1] as $value) {
+                $var           = explode('=', str_replace(['"', '+', ' '], ['', '', ''], $value), 2);
+                $vars[$var[0]] = $var[1];
+            }
+
+            preg_match_all("/(\w+\+|\w+;)/", $this->full_content, $solution);
+
+            $link = '';
+
+            foreach ($solution[1] as $value) {
+                $link .= $vars[str_replace(['+', ';'], ['', ''], $value)];
+            }
+            $this->new_content = Utils::get_redirect_url($link);
+            if ($this->data == 'hls' && preg_match('/(.*m3u8.*)/', $this->new_content, $match)) {
                 $this->new_content = $match[1];
-            } else if ($this->data == 'mp4' && preg_match('/src="(.*mp4.*?)"/', $this->full_content, $match)) {
+            } else if ($this->data == 'mp4' && preg_match('/(.*mp4.*)/', $this->new_content, $match)) {
                 $this->new_content = $match[1];
             } else {
-                // check if the video source is encoded
-                if (!preg_match('/t">\s+(.*?)\s+var/', $this->full_content, $raw_variables)) {
-                    return;
-                }
-
-                preg_match_all('/var (.*?=".*?");/', $raw_variables[1], $parsed_variable);
-                $vars = [];
-
-                foreach ($parsed_variable[1] as $value) {
-                    $var           = explode('=', str_replace(['"', '+', ' '], ['', '', ''], $value), 2);
-                    $vars[$var[0]] = $var[1];
-                }
-
-                preg_match_all("/(\w+\+|\w+;)/", $this->full_content, $solution);
-
-                $link = '';
-
-                foreach ($solution[1] as $value) {
-                    $link .= $vars[str_replace(['+', ';'], ['', ''], $value)];
-                }
-                $this->new_content = Utils::get_redirect_url($link);
-                if ($this->data == 'hls' && preg_match('/(.*m3u8.*)/', $this->new_content, $match)) {
-                    $this->new_content = $match[1];
-                } else if ($this->data == 'mp4' && preg_match('/(.*mp4.*)/', $this->new_content, $match)) {
-                    $this->new_content = $match[1];
-                } else {
-                    $this->new_content = '';
-                }
+                $this->new_content = '';
             }
         }
 
@@ -107,35 +114,37 @@ class Extra_methods {
     public function iporntv() {
         LoadTime::start('iporntv');
 
-        if (preg_match('/source/', $this->full_content, $match)) {
-            if ($this->data == 'hls' && preg_match('/src="(.*m3u8.*?)"/', $this->full_content, $match)) {
-                $this->new_content = $match[1];
-            } else if ($this->data == 'mp4' && preg_match('/src="(.*mp4.*?)"/', $this->full_content, $match)) {
-                $this->new_content = $match[1];
-            } else {
-                // check if the video source is encoded
-                if (!preg_match('/t">\s+(.*?)\s+var/', $this->full_content, $raw_variables)) {
-                    return;
-                }
+        if (!preg_match('/source/', $this->full_content, $match)) {
+            return;
+        }
 
-                preg_match_all('/var (.*?=".*?");/', $raw_variables[1], $parsed_variable);
-                $vars = [];
-
-                foreach ($parsed_variable[1] as $value) {
-                    $var           = explode('=', str_replace(['"', '+', ' '], ['', '', ''], $value), 2);
-                    $vars[$var[0]] = $var[1];
-                }
-
-                preg_match("/;var \w+ =((\w+|\+)+)/", $this->full_content, $solution);
-                preg_match_all("/(\w+\+|\w+)/", $solution[1], $parsed_solution);
-
-                $link = '';
-
-                foreach ($parsed_solution[1] as $value) {
-                    $link .= $vars[str_replace(['+', ';'], ['', ''], $value)];
-                }
-                $this->new_content = Utils::get_redirect_url($link);
+        if ($this->data == 'hls' && preg_match('/src="(.*m3u8.*?)"/', $this->full_content, $match)) {
+            $this->new_content = $match[1];
+        } else if ($this->data == 'mp4' && preg_match('/src="(.*mp4.*?)"/', $this->full_content, $match)) {
+            $this->new_content = $match[1];
+        } else {
+            // check if the video source is encoded
+            if (!preg_match('/t">\s+(.*?)\s+var/', $this->full_content, $raw_variables)) {
+                return;
             }
+
+            preg_match_all('/var (.*?=".*?");/', $raw_variables[1], $parsed_variable);
+            $vars = [];
+
+            foreach ($parsed_variable[1] as $value) {
+                $var           = explode('=', str_replace(['"', '+', ' '], ['', '', ''], $value), 2);
+                $vars[$var[0]] = $var[1];
+            }
+
+            preg_match("/;var \w+ =((\w+|\+)+)/", $this->full_content, $solution);
+            preg_match_all("/(\w+\+|\w+)/", $solution[1], $parsed_solution);
+
+            $link = '';
+
+            foreach ($parsed_solution[1] as $value) {
+                $link .= $vars[str_replace(['+', ';'], ['', ''], $value)];
+            }
+            $this->new_content = Utils::get_redirect_url($link);
         }
 
         LoadTime::end('iporntv');
