@@ -282,23 +282,35 @@
         ]
     },
     "xnxx": {
-        "general_data": {
-            "include": ["high", "duration"],
-            "expiration_time": 10800,
-            "metadata": {
-                "media": {
-                    "hls": {
-                        "all": ""
-                    },
-                    "mp4": {
-                        "high": "",
-                        "low": ""
-                    }
+        "include": ["low", "duration"],
+        "expiration_time": 10800,
+        "thumbnails": {
+            "single": {
+                "cols": 10,
+                "rows": 10,
+                "width": 208,
+                "height": 117
+            },
+            "multiple": {
+                "cols": 10,
+                "rows": 6,
+                "width": 208,
+                "height": 117
+            }
+        },
+        "metadata": {
+            "media": {
+                "hls": {
+                    "all": ""
                 },
-                "data": {
-                    "thumb": "",
-                    "duration": ""
+                "mp4": {
+                    "high": "",
+                    "low": ""
                 }
+            },
+            "data": {
+                "thumb": "",
+                "duration": ""
             }
         },
         "servers": [
