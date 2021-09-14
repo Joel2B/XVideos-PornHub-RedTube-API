@@ -153,8 +153,14 @@ class Extra_methods {
         $this->new_content = Utils::get_redirect_url($this->full_content);
     }
 
+    // TODO: refactor these methods
     public function get_thumnails_xv() {
-        $thumb       = $this->data['thumb'];
+        $thumb                    = $this->data['thumb'];
+        $this->data['thumbnails'] = '';
+        if (empty($thumb)) {
+            $this->new_content = $this->data;
+            return;
+        }
         $thumb       = str_replace(['poster', 'lll', 'll'], ['', '', ''], $thumb);
         $thumb       = substr($thumb, 0, strrpos($thumb, '/') + 1);
         $duration    = $this->data['duration'];
@@ -183,7 +189,12 @@ class Extra_methods {
     }
 
     public function get_thumnails_ph() {
-        $url = $this->data['thumbnails'];
+        $url                      = $this->data['thumbnails'];
+        $this->data['thumbnails'] = '';
+        if (empty($url)) {
+            $this->new_content = $this->data;
+            return;
+        }
         preg_match("/{(.*)}/", $url, $total_links);
         $url        = str_replace('\/', '/', $url);
         $url        = substr($url, 0, strrpos($url, ')') + 2);
