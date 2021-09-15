@@ -206,7 +206,11 @@ class Extra_methods {
         }
         preg_match("/{(.*)}/", $url, $total_links);
         $url        = str_replace('\/', '/', $url);
-        $url        = substr($url, 0, strrpos($url, ')') + 2);
+        if (strpos($url, ')') !== false) {
+            $url        = substr($url, 0, strrpos($url, ')') + 2);
+        } else {
+            $url        = substr($url, 0, strrpos($url, '/') + 1);
+        }
         $type_thumb = 'multiple';
 
         $thumb_data = [
