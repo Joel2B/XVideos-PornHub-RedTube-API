@@ -21,6 +21,7 @@ Only get requests are accepted, so data can be entered directly in url
 | :---: | :---: |
 | site_id  | id of the site that wants to get the video (xvideos, pornhub, redtube)  |
 | video_id  | id of the video that corresponds to the site  |
+| data  | link to the video, with at least the domain name and video id  |
 
 ## Example
 ```php
@@ -38,23 +39,23 @@ Array
 (
     [hls] => Array
         (
-            [all] => https://cdn77-vid.xvideos-cdn.com/NiMJgxJBKoqJRvuxIXs5XQ==,1630638308/videos/hls/de/b6/c0/deb6c040575ef28dee0d5a0240c4b04d/hls.m3u8
+            [all] => https://cdn77-vid.xvideos-cdn.com/EzxFnSwy-9fX68oCPYYOhw==,1631685848/videos/hls/de/b6/c0/deb6c040575ef28dee0d5a0240c4b04d/hls.m3u8
         )
 
     [mp4] => Array
         (
-            [high] => https://cdn77-vid.xvideos-cdn.com/vU_ri94ojuhQsodBdYmPqA==,1630638309/videos/mp4/d/e/b/xvideos.com_deb6c040575ef28dee0d5a0240c4b04d.mp4?ui=MjgwNjoxMDFlOjg6Mjg4NjpmZGE2OjQyMjk6YjE2NzplOWQ1LS9lbWJlZGZyYW1lLzU5OTM0MDI5P3I9MTYzMDYyNw==
-            [low] => https://cdn77-vid.xvideos-cdn.com/_ytZZ3inXoM9NjGGly2X5w==,1630638309/videos/3gp/d/e/b/xvideos.com_deb6c040575ef28dee0d5a0240c4b04d.mp4?ui=MjgwNjoxMDFlOjg6Mjg4NjpmZGE2OjQyMjk6YjE2NzplOWQ1LS9lbWJlZGZyYW1lLzU5OTM0MDI5P3I9MTYzMDYyNw==
+            [high] => https://cdn77-vid.xvideos-cdn.com/ZeDUyLXiZDKCXlc_9G72Fg==,1631685848/videos/mp4/d/e/b/xvideos.com_deb6c040575ef28dee0d5a0240c4b04d.mp4?ui=MTg1LjE1Ni4yMTkuMTQ0LS9lbWJlZGZyYW1lLzU5OTM0MDI5P3I9MTYzMTY3NQ==
+            [low] => https://cdn77-vid.xvideos-cdn.com/XSSyMypFsDouI49r6eYB1Q==,1631685848/videos/3gp/d/e/b/xvideos.com_deb6c040575ef28dee0d5a0240c4b04d.mp4?ui=MTg1LjE1Ni4yMTkuMTQ0LS9lbWJlZGZyYW1lLzU5OTM0MDI5P3I9MTYzMTY3NQ==
         )
 
     [thumb] => https://cdn77-pic.xvideos-cdn.com/videos/thumbs169lll/de/b6/c0/deb6c040575ef28dee0d5a0240c4b04d/deb6c040575ef28dee0d5a0240c4b04d.25.jpg
-    [thumbnails] => /api/vtt/eHZpZGVvc3h4eHh4eHh4eIQuPOZKjQDosFrBVWNZOX1KtJt9dZbonjIEXI50IzTCrzqFJoAHlahbZQvC2DdXp-Fx1XhsmsiS643j1783hqaMKYgHFUVR1ph-tCBP2ByTCxE2ni-4TgPLbJJgPrhn10OGgFbkncuOfWDjBrXTo_JBJVbsCq85Ipu_heIsBn3i3bUILlOw6zTr3HihbIGhvlgHiZc7ZG4nU0ra1FpYV5plkTAn8SQwnPyR9mGsujpEurWSj2YRL3Nd2fAlAn-CC93AYFt_YaSS2HA2ZtJw6J-W6wiO0V3V4DYuciNb2BB5lFd7N9sUfFnu9PPSj2Xnx9dsr8vFrbpwha17rAepm4c=
+    [thumbnails] => http://localhost/api/vtt/eHZpZGVvc3h4eHh4eHh4eIQuPOZKjQDosFrBVWNZOX1KtJt9dZbonjIEXI50IzTCrzqFJoAHlahbZQvC2DdXp-Fx1XhsmsiS643j1783hqaMKYgHFUVR1ph-tCBP2ByTCxE2ni-4TgPLbJJgPrhn10OGgFbkncuOfWDjBrXTo_JBJVbsCq85Ipu_heIsBn3i3bUILlOw6zTr3HihbIGhvlgHiZc7ZG4nU0ra1FpYV5plkTAn8SQwnPyR9mGsujpEurWSj2YRL3Nd2fAlAn-CC93AYFt_YaSS2HA2ZtJw6J-W6wiO0V3V4DYuciNb2BB5lFd7N9sUfFnu9PPSj2Xnx9dsr8vFrbpwha17rAepm4c=
 )
 ```
 
 ## Example online
 
-[https://watchonline.nom.es/example/](https://watchonline.nom.es/example/)
+[https://watchonline.nom.es/example/xv-ph-rt/](https://watchonline.nom.es/example/xv-ph-rt/)
 
 ## How to add more sites / servers
 
