@@ -21,7 +21,7 @@ class Utils {
             // CURLOPT_SSL_VERIFYPEER => false
         ];
         if ($cookie) {
-            $options[CURLOPT_COOKIEFILE] = dirname(__FILE__) . '\tmp\cookie.txt';
+            $options[CURLOPT_COOKIEFILE] = dirname(__FILE__) . '/tmp/cookie.txt';
         }
         curl_setopt_array($curl, $options);
         $content = curl_exec($curl);
@@ -78,7 +78,7 @@ class Utils {
             ];
 
             if ($cookie) {
-                $options[CURLOPT_COOKIEJAR] = dirname(__FILE__) . '\tmp\cookie.txt';
+                $options[CURLOPT_COOKIEJAR] = dirname(__FILE__) . '/tmp/cookie.txt';
             }
 
             if ($http_code) {
