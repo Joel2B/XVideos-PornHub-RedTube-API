@@ -50,10 +50,7 @@ class Utils {
         return $redirect_url;
     }
 
-    public static function get_multiple_urls(
-        $urls,
-        $cookie = false
-    ) {
+    public static function get_multiple_urls($urls) {
         $user_agent = \Campo\UserAgent::random( array( 'device_type' => 'Desktop' ) );;
         $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? $user_agent;
 
@@ -86,7 +83,7 @@ class Utils {
                     $options[CURLOPT_COOKIE] = $cookie;
                 }
             }
-            if ($cookie) {
+            if ($data['cookie']) {
                 $options[CURLOPT_COOKIEJAR] = dirname(__FILE__) . '/tmp/cookie.txt';
             }
 

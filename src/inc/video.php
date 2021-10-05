@@ -160,7 +160,6 @@ class Video {
     public function get_links_content($category) {
         $urls    = [];
         $servers = $this->sources[$this->site_id]['servers'];
-        $cookie  = false;
         foreach ($servers as $server_index => $server) {
             if (!in_array($category, $server['category'])) {
                 continue;
@@ -177,30 +176,25 @@ class Video {
             ];
 
             $url = str_replace($search, $replace, $server['url']);
-            $bypass = false;
+            $cookie = isset($server['cookie']);
+            $bypass = isset($server['bypass']);
             // use own servers
             if (preg_match('/{url}/', $server['url'])) {
                 $url = str_replace('{video_id}', $this->video_id, $this->data['url']);
                 $url = str_replace('{url}', urlencode($url), $server['url']);
-                if (isset($server['cookie'])) {
+                if ($cookie) {
                     $url .= '&cookie=create';
                 }
-            } else {
-                if (isset($server['cookie'])) {
-                    $cookie = $server['cookie'];
-                }
-            }
-            if (isset($server['bypass'])) {
-                $bypass = true;
             }
             $urls[$server_index] = [
                 'url' => $url,
+                'cookie' => $cookie,
                 'bypass' => $bypass
             ];
 
             _msg::msg('URL', "<a style='color: #0000ee' target='_blank' href='$url'>$url</a>", false);
         }
-        return Utils::get_multiple_urls($urls, $cookie, true);
+        return Utils::get_multiple_urls($urls);
     }
 
     public function get_derived_data() {
