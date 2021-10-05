@@ -55,7 +55,7 @@ Array
 
 ## Example online
 
-[https://watchonline.nom.es/example/xv-ph-rt/](https://watchonline.nom.es/example/xv-ph-rt/)
+[https://appsdev.cyou/xv-ph-rt/](https://appsdev.cyou/xv-ph-rt/)
 
 ## How to add more sites / servers
 
