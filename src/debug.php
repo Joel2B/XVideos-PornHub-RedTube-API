@@ -19,7 +19,10 @@
 
     LoadTime::start('total load');
 
-    $video = new Video($site_id, $video_id);
+    $data['site_id']  = $site_id;
+    $data['video_id'] = $video_id;
+
+    $video = new Video($data);
     $data  = $video->get_links();
     _msg::msg($data);
 
