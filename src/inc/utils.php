@@ -1,9 +1,10 @@
 <?php
 
-// TODO: user agent must be made random
+include 'user_agent.php';
+
 class Utils {
     public static function get_url_content($url, $cookie = false, $bypass = false) {
-        $user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36';
+        $user_agent = \Campo\UserAgent::random( array( 'device_type' => 'Desktop' ) );;
         $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? $user_agent;
         $headers    = ['Cache-Control: no-cache'];
         $curl       = curl_init();
@@ -53,7 +54,7 @@ class Utils {
         $urls,
         $cookie = false
     ) {
-        $user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36';
+        $user_agent = \Campo\UserAgent::random( array( 'device_type' => 'Desktop' ) );;
         $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? $user_agent;
 
         $curl   = [];
