@@ -35,7 +35,7 @@ class Extra_methods {
 
         if ($this->own_server != '') {
             $url               = str_replace('{url}', urlencode($link), $this->own_server);
-            $this->new_content = Utils::get_url_content($url);
+            $this->new_content = Utils::get_url_content($url, false, true);
         } else {
             $this->new_content = Utils::get_url_content($link, true);
         }

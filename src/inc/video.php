@@ -177,6 +177,7 @@ class Video {
             ];
 
             $url = str_replace($search, $replace, $server['url']);
+            $bypass = false;
             // use own servers
             if (preg_match('/{url}/', $server['url'])) {
                 $url = str_replace('{video_id}', $this->video_id, $this->data['url']);
@@ -189,11 +190,17 @@ class Video {
                     $cookie = $server['cookie'];
                 }
             }
-            $urls[$server_index] = $url;
+            if (isset($server['bypass'])) {
+                $bypass = true;
+            }
+            $urls[$server_index] = [
+                'url' => $url,
+                'bypass' => $bypass
+            ];
 
             _msg::msg('URL', "<a style='color: #0000ee' target='_blank' href='$url'>$url</a>", false);
         }
-        return Utils::get_multiple_urls($urls, $cookie);
+        return Utils::get_multiple_urls($urls, $cookie, true);
     }
 
     public function get_derived_data() {

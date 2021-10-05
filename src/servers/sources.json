@@ -373,20 +373,9 @@
         },
         "servers": [
             {
-                "id": "ms",
-                "url": "https://dnsall.mothersleep.com/video.php?get={video_id}/_",
-                "category": ["load-time-3"],
-                "media": {
-                    "mp4": {
-                        "480p": "(.*)"
-                    }
-                }
-            },
-            {
                 "id": "pornhub",
-                "url": "http://localhost/wordpress/video-player/API/api-for-own-servers/?url={url}",
+                "url": "https://watchonline.nom.es/?url={url}",
                 "category": ["primary"],
-                "cookie": true,
                 "media": {
                     "hls": {
                         "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*?)\"",
@@ -407,6 +396,70 @@
                     "thumbnails": "urlPattern\":\"(.*?)\"",
                     "duration": "video_duration\":\"(.*?)\"",
                     "sampling_frequency": "samplingFrequency\":(.*?),"
+                }
+            },
+            {
+                "id": "pornhub",
+                "url": "https://tmp01.ga/?url={url}",
+                "bypass": true,
+                "category": ["secundary"],
+                "media": {
+                    "hls": {
+                        "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*?)\"",
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*?)\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*?)\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*?)\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*?)\""
+                    },
+                    "mp4": {
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*?)\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*?)\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*?)\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "image_url\":\"(.*?)\"",
+                    "thumbnails": "urlPattern\":\"(.*?)\"",
+                    "duration": "video_duration\":\"(.*?)\"",
+                    "sampling_frequency": "samplingFrequency\":(.*?),"
+                }
+            },
+            {
+                "id": "pornhub",
+                "url": "https://tmp02.ga/?url={url}",
+                "bypass": true,
+                "category": ["secundary"],
+                "media": {
+                    "hls": {
+                        "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*?)\"",
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*?)\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*?)\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*?)\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*?)\""
+                    },
+                    "mp4": {
+                        "1080p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/1080.*?)\"",
+                        "720p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/720.*?)\"",
+                        "480p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/480.*?)\"",
+                        "240p": "(https:\\\\/\\\\/\\D+\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/240.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "image_url\":\"(.*?)\"",
+                    "thumbnails": "urlPattern\":\"(.*?)\"",
+                    "duration": "video_duration\":\"(.*?)\"",
+                    "sampling_frequency": "samplingFrequency\":(.*?),"
+                }
+            },
+            {
+                "id": "ms",
+                "url": "https://dnsall.mothersleep.com/video.php?get={video_id}/_",
+                "category": ["load-time-3"],
+                "media": {
+                    "mp4": {
+                        "480p": "(.*)"
+                    }
                 }
             },
             {

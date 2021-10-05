@@ -2,7 +2,7 @@
 
 // TODO: user agent must be made random
 class Utils {
-    public static function get_url_content($url, $cookie = false) {
+    public static function get_url_content($url, $cookie = false, $bypass = false) {
         $user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36';
         $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? $user_agent;
         $headers    = ['Cache-Control: no-cache'];
@@ -20,6 +20,9 @@ class Utils {
             CURLOPT_RETURNTRANSFER => true
             // CURLOPT_SSL_VERIFYPEER => false
         ];
+        if ($bypass) {
+            $options[CURLOPT_COOKIE] = self::get_url_content(BYPASS_URL . '/?url=' . $url);
+        }
         if ($cookie) {
             $options[CURLOPT_COOKIEFILE] = dirname(__FILE__) . '/tmp/cookie.txt';
         }
@@ -48,8 +51,7 @@ class Utils {
 
     public static function get_multiple_urls(
         $urls,
-        $cookie = false,
-        $http_code = false
+        $cookie = false
     ) {
         $user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36';
         $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? $user_agent;
@@ -61,8 +63,9 @@ class Utils {
 
         $headers = ['Cache-Control: no-cache'];
 
-        foreach ($urls as $id => $link) {
-            $curl[$id] = curl_init($link);
+        foreach ($urls as $id => $data) {
+            $url = $data['url'];
+            $curl[$id] = curl_init($url);
 
             $options = [
                 CURLOPT_USERAGENT      => $user_agent,
@@ -76,14 +79,14 @@ class Utils {
                 CURLOPT_RETURNTRANSFER => true
                 // CURLOPT_SSL_VERIFYPEER => false
             ];
-
+            if ($data['bypass']) {
+                $cookie = self::get_url_content(BYPASS_URL . '/?url=' . $url);
+                if (!empty($cookie)) {
+                    $options[CURLOPT_COOKIE] = $cookie;
+                }
+            }
             if ($cookie) {
                 $options[CURLOPT_COOKIEJAR] = dirname(__FILE__) . '/tmp/cookie.txt';
-            }
-
-            if ($http_code) {
-                $options[CURLOPT_HEADER] = 1;
-                $options[CURLOPT_NOBODY] = 1;
             }
 
             curl_setopt_array($curl[$id], $options);
@@ -97,12 +100,8 @@ class Utils {
         } while ($running);
         LoadTime::end('gmu');
 
-        foreach ($urls as $id => $link) {
-            if ($http_code) {
-                $result[$id] = curl_getinfo($curl[$id], CURLINFO_HTTP_CODE);
-            } else {
-                $result[$id] = curl_multi_getcontent($curl[$id]);
-            }
+        foreach ($urls as $id => $url) {
+            $result[$id] = curl_multi_getcontent($curl[$id]);
             curl_multi_remove_handle($mh, $curl[$id]);
         }
         curl_multi_close($mh);

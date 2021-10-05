@@ -1,40 +1,37 @@
 <?php
 
-function get_url_content($url, $cookie = '') {
-    $user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36';
-    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? $user_agent;
-    $headers    = ['Cache-Control: no-cache'];
-    $curl       = curl_init();
-    $options    = [
-        CURLOPT_URL            => $url,
-        CURLOPT_USERAGENT      => $user_agent,
-        CURLOPT_AUTOREFERER    => true,
-        CURLOPT_FRESH_CONNECT  => true,
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_MAXREDIRS      => 10,
-        CURLOPT_CONNECTTIMEOUT => 3,
-        CURLOPT_TIMEOUT        => 4,
-        CURLOPT_RETURNTRANSFER => true
-        // CURLOPT_SSL_VERIFYPEER => false
-    ];
-    if ($cookie == 'create') {
-        $options[CURLOPT_COOKIEJAR] = dirname(__FILE__) . '\tmp\cookie.txt';
-    } else {
-        $options[CURLOPT_COOKIEFILE] = dirname(__FILE__) . '\tmp\cookie.txt';
+require_once 'HTTP/Request2.php';
+
+function get_url_content( $url, $create_cookie ) {
+    $request = new HTTP_Request2();
+    $request->setUrl( $url );
+    $request->setMethod( HTTP_Request2::METHOD_GET );
+    $request->setConfig( array(
+        'follow_redirects' => true,
+    ) );
+    if ( ! $create_cookie ) {
+        $cookies = json_decode( file_get_contents( 'tmp/cookies.txt' ), true );
+        foreach ( $cookies as $cookie ) {
+            $request->addCookie( $cookie['name'], $cookie['value'] );
+        }
     }
-    curl_setopt_array($curl, $options);
-    $content = curl_exec($curl);
-    curl_close($curl);
-    return $content;
+
+    $response = $request->send();
+    if ( $response->getStatus() == 200 ) {
+        if ( $create_cookie ) {
+            file_put_contents( 'tmp/cookies.txt', json_encode( $response->getCookies() ) );
+        }
+        return $response->getBody();
+    }
+    return '';
 }
 
-header('Content-type: text/plain');
-
-if (!isset($_GET['url']) || empty($_GET['url'])) {
+if ( empty( $_GET['url'] ) ) {
     die();
 }
 
-$url    = urldecode($_GET['url']);
-$cookie = isset($_GET['cookie']) ? $_GET['cookie'] : '';
-echo get_url_content($url, $cookie);
+$url           = $_GET['url'];
+$create_cookie = isset( $_GET['cookie'] ) && $_GET['cookie'] == 'create';
+
+header( 'Content-type: text/plain' );
+echo get_url_content( $url, $create_cookie );
