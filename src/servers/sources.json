@@ -1,6 +1,7 @@
 {
     "xvideos": {
         "video_id": "(?:video|\\/)(\\d+)",
+        "url": "https://www.xvideos.com/video{video_id}/",
         "include": ["low", "duration"],
         "expiration_time": 10800,
         "thumbnails": {
@@ -493,6 +494,7 @@
     },
     "redtube": {
         "video_id": "(?:\\/|=)(\\d+)",
+        "url": "https://www.redtube.com/{video_id}",
         "include": ["thumb"],
         "expiration_time": 3600,
         "thumbnails": {
