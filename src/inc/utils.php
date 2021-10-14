@@ -196,6 +196,20 @@ class Utils {
         }
     }
 
+    public static function is_empty_array($arr) {
+        $empty = true;
+        foreach ($arr as $value) {
+            if (is_array($value)) {
+                $empty = self::is_empty_array($value);
+            } else {
+                if (!empty($value)) {
+                    return false;
+                }
+            }
+        }
+        return $empty;
+    }
+
     public static function get_image_size($img) {
         $img_data = getimagesize($img);
         if ($img_data) {

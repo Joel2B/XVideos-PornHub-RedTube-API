@@ -149,8 +149,9 @@ class Video {
             // if the necessary data is obtained, the search is stopped
             if (!$continue) {
                 if (!$this->cache->check_cache()) {
-                    $tmp = $this->metadata;
-                    $this->cache->save_cache($tmp);
+                    if (!Utils::is_empty_array($this->metadata['media'])) {
+                        $this->cache->save_cache($this->metadata);
+                    }
                 }
                 break;
             }
