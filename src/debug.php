@@ -68,7 +68,7 @@
             <source src="<?php echo $data['mp4']['480p']; ?>" type="video/mp4" />
             <source src="<?php echo $data['mp4']['240p']; ?>" type="video/mp4" /> -->
         </video>
-        <script src="https://watchonline.nom.es/player/v1/current/player.min.js"></script>
+        <script src="https://appsdev.cyou/player/v1/current/player.min.js"></script>
         <script>
             var instance = fluidPlayer('video-player', {
                 layoutControls: {
