@@ -7,9 +7,25 @@ class Extra_methods {
         if ($this->tmp == $this->data) {
             return;
         }
-        // ph encodes the video sources
-        if (!preg_match("/'];\n\t\t(.*?);var media/", $this->full_content, $raw_variables)) {
-            return;
+
+        // ph breaks video sources into fragments
+        // TODO: for now the last "media" has everything, if ph makes it random, this code needs to be changed.
+        $match = false;
+        for ($i = 5; $i > 0; $i--) { 
+            $j = $i - 1;
+            if (preg_match("/media_$j;(.*?);var media_$i/", $this->full_content, $raw_variables)) {
+                $media = "media_$i";
+                $match = true;
+                break;
+            }
+        }
+
+        if (!$match) {
+            if (preg_match("/'];\n\t\t(.*?);var media/", $this->full_content, $raw_variables)) {
+                $media = 'media_0';
+            } else {
+                return;
+            }
         }
 
         $vars = [];
@@ -19,7 +35,8 @@ class Extra_methods {
             $var           = explode('=', str_replace(['"', '+', ' '], ['', '', ''], $value), 2);
             $vars[$var[0]] = $var[1];
         }
-        preg_match("/var media_0=(.*?);/", $this->full_content, $match);
+
+        preg_match("/var $media=(.*?);/", $this->full_content, $match);
         preg_match_all("/(\*\/|\*\/ \+)(| )(\w+)(| )(\+|\/\*|)/", $match[1], $solution);
 
         $link = '';
@@ -27,10 +44,12 @@ class Extra_methods {
         foreach ($solution[3] as $value) {
             $link .= $vars[$value];
         }
+
         $format = 'a';
         if ($this->data == 'mp4') {
             $format = 'p';
         }
+
         $link = substr($link, 0, strlen($link) - 1) . $format;
 
         if ($this->own_server != '') {
@@ -39,6 +58,7 @@ class Extra_methods {
         } else {
             $this->new_content = Utils::get_url_content($link, true);
         }
+
         $this->tmp = $this->data;
         LoadTime::end($this->data);
     }
