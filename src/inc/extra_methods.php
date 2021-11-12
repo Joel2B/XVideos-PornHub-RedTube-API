@@ -10,17 +10,16 @@ class Extra_methods {
 
         // ph breaks video sources into fragments
         // TODO: for now the last "media" has everything, if ph makes it random, this code needs to be changed.
-        $match = false;
-        for ($i = 5; $i > 0; $i--) { 
-            $j = $i - 1;
-            if (preg_match("/media_$j;(.*?);var media_$i/", $this->full_content, $raw_variables)) {
-                $media = "media_$i";
-                $match = true;
-                break;
-            }
+        if (!preg_match("/(media_[0-9]);\n\t\tvar/", $this->full_content, $media)) {
+            return;
         }
 
-        if (!$match) {
+        $media = $media[1];
+        $data  = explode('_', $media);
+        $data[1] -= 1;
+        $previous = implode('_', $data);
+
+        if (!preg_match("/$previous;(.*?);var $media/", $this->full_content, $raw_variables)) {
             if (preg_match("/'];\n\t\t(.*?);var media/", $this->full_content, $raw_variables)) {
                 $media = 'media_0';
             } else {
