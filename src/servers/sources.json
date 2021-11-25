@@ -1,7 +1,7 @@
 {
     "xvideos": {
         "video_id": "(?:video|\\/)(\\d+)",
-        "url": "https://www.xvideos.com/video{video_id}/",
+        "url": "https://www.xvideos.com/video{video_id}/_",
         "include": ["low", "duration"],
         "expiration_time": 10800,
         "thumbnails": {
