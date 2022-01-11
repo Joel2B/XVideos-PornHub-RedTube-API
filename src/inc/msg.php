@@ -4,14 +4,16 @@ class _msg {
     public static $msg_counter = 0;
 
     public static function msg($title = '', $msg = '', $encode = true) {
-        if (!defined('DEBUG') || DEBUG == false) {
+        if (!defined('DEBUG') || !DEBUG) {
             return;
         }
 
         $num_args = func_num_args();
-        if ($num_args == 1) {
+        if ($num_args === 1) {
             self::$msg_counter++;
+
             echo '<b>Msg: ' . self::$msg_counter . '</b><br>';
+
             $msg = func_get_arg(0);
         } else {
             if (!empty($title)) {
@@ -30,6 +32,7 @@ class _msg {
                 echo $msg;
             }
         }
+
         echo '<hr>';
     }
 }

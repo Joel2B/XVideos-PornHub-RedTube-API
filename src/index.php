@@ -1,18 +1,20 @@
 <?php
 
-if (isset($_SERVER['HTTP_ORIGIN']) === true) {
-    $origin          = $_SERVER['HTTP_ORIGIN'];
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    $origin = $_SERVER['HTTP_ORIGIN'];
+
     $allowed_domains = [
         'https://example.com',
-        'http://localhost'
+        'http://localhost',
     ];
 
-    if (in_array($origin, $allowed_domains, true) === true) {
-        header('Access-Control-Allow-Origin: ' . $origin);
+    if (in_array($origin, $allowed_domains, true)) {
+        header("Access-Control-Allow-Origin: $origin");
         header('Access-Control-Allow-Methods: GET');
         header('Access-Control-Allow-Headers: Content-Type');
     }
 }
+
 header('Content-Type: application/json');
 
 include 'config.php';
@@ -31,4 +33,5 @@ if (!empty($_GET['data'])) {
 
 $video = new Video($data);
 $data  = $video->get_links();
+
 echo json_encode($data);

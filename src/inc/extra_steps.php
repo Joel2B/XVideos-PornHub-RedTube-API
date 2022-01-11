@@ -7,10 +7,13 @@ include 'extra_methods.php';
 class Extra_steps extends Extra_methods {
     // xv, ph, rt
     public $site_id;
+
     // id of a website
     public $server_id;
+
     // content of the website
     public $full_content;
+
     // if there were extra steps, a new content is used
     public $new_content = null;
 
@@ -34,7 +37,9 @@ class Extra_steps extends Extra_methods {
         $this->full_content = $full_content;
         $this->data         = $data;
         $this->own_server   = $own_server;
-        $return             = true;
+
+        $return = true;
+
         switch ($this->site_id) {
             case 'xvideos':
                 switch ($section) {
@@ -158,6 +163,7 @@ class Extra_steps extends Extra_methods {
 
     public function remove_data(...$args) {
         Utils::remove_multiple_parent_array($this->data, ...$args);
+
         $this->new_content = $this->data;
     }
 }

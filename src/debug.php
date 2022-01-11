@@ -1,34 +1,39 @@
 <?php
 
     include 'config.php';
+
     define('DEBUG', true);
+
     if (!DEBUG_PAGE) {
         die();
     }
 
     include 'inc/video.php';
 
-    $site_id  = 'xvideos';
-    $video_id = '59934029';
+    if (!empty($_GET['site_id'])) {
+        $site_id = $_GET['site_id'];
 
-    // $site_id  = 'pornhub';
-    // $video_id = 'ph6116a13a48187';
+        $sites = [
+            'xvideos' => '59934029',
+            'pornhub' => 'ph6116a13a48187',
+            'redtube' => '39697741',
+        ];
 
-    // $site_id  = 'redtube';
-    // $video_id = '39518521';
+        $data['site_id']  = $site_id;
+        $data['video_id'] = $sites[$site_id];
 
-    LoadTime::start('total load');
+        LoadTime::start('total load');
 
-    $data['site_id']  = $site_id;
-    $data['video_id'] = $video_id;
+        $video = new Video($data);
+        $data  = $video->get_links();
 
-    $video = new Video($data);
-    $data  = $video->get_links();
-    _msg::msg($data);
+        LoadTime::end('total load');
 
-    LoadTime::end('total load');
+        _msg::msg($data);
 
-    _msg::msg('memory usage', (memory_get_peak_usage(true) / 1024 / 1024) . 'MiB');
+        _msg::msg('memory usage', (memory_get_peak_usage(true) / 1024 / 1024) . 'MiB');
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,39 +55,69 @@
                 position: absolute;
             }
 
+            .sites {
+                display: flex;
+            }
+
+            .sites a {
+                text-decoration: none;
+                color: #000;
+                font-family: sans-serif;
+                padding: 10px;
+                margin: 3px;
+                border: 1px solid;
+                border-radius: 4px;
+            }
+
             #video-player {
                 width: 50%;
             }
         </style>
     </head>
     <body>
+        <div class="sites">
+            <a href="./debug.php?site_id=xvideos">xvideos</a>
+            <a href="./debug.php?site_id=pornhub">pornhub</a>
+            <a href="./debug.php?site_id=redtube">redtube</a>
+        </div>
         <video id="video-player">
-            <!-- xvideos -->
-            <source src="<?php echo $data['hls']['all']; ?>" type="application/x-mpegURL" />
-            <!-- <source src="<?php echo $data['mp4']['high']; ?>" type="video/mp4" />
-            <source src="<?php echo $data['mp4']['low']; ?>" type="video/mp4" /> -->
-            <!-- pornhub / redtube -->
-            <!-- <source src="<?php echo $data['hls']['all']; ?>" type="application/x-mpegURL" />
-            <source src="<?php echo $data['mp4']['1080p']; ?>" type="video/mp4" />
-            <source src="<?php echo $data['mp4']['720p']; ?>" type="video/mp4" />
-            <source src="<?php echo $data['mp4']['480p']; ?>" type="video/mp4" />
-            <source src="<?php echo $data['mp4']['240p']; ?>" type="video/mp4" /> -->
+            <?php
+                if ($site_id === 'xvideos') {
+                    echo "<source src=\"{$data['hls']['all']}\" type=\"application/x-mpegURL\">";
+                    echo "<source src=\"{$data['mp4']['high']}\" type=\"video/mp4\">";
+                    echo "<source src=\"{$data['mp4']['low']}\" type=\"video/mp4\">";
+                } else if ($site_id === 'pornhub' || $site_id === 'redtube') {
+                    if ($site_id === 'redtube') {
+                        echo "<source src=\"{$data['hls']['all']}\" type=\"application/x-mpegURL\">";
+                    }
+                    echo "<source src=\"{$data['mp4']['1080p']}\" type=\"video/mp4\">";
+                    echo "<source src=\"{$data['mp4']['720p']}\" type=\"video/mp4\">";
+                    echo "<source src=\"{$data['mp4']['480p']}\" type=\"video/mp4\">";
+                    echo "<source src=\"{$data['mp4']['240p']}\" type=\"video/mp4\">";
+                }
+            ?>
         </video>
         <script src="https://appsdev.cyou/player/v1/current/player.min.js"></script>
         <script>
-            var instance = fluidPlayer('video-player', {
+            let instance = fluidPlayer('video-player', {
                 layoutControls: {
+                    mute: true,
                     posterImage: '<?php echo $data['thumb']; ?>',
-                    loop: true,
                     timelinePreview: {
                         file: '<?php echo $data['thumbnails']; ?>',
                         type: 'VTT'
                     },
-                    playPauseAnimation: true,
-                    menu: {
-                        loop: true
-                    }
-                }
+                },
+                hls: {
+                    overrideNative: true,
+                },
+                debug: true,
+            });
+
+            window.scrollTo({
+                left: 0,
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
             });
         </script>
     </body>

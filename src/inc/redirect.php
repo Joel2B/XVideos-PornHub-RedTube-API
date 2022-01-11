@@ -2,12 +2,13 @@
 
 include 'encryption.php';
 
-if (!isset($_GET['data']) || empty($_GET['data'])) {
+if (empty($_GET['data'])) {
     die();
 }
 
 $url = (new Encryption('', false))->decrypt($_GET['data']);
-if ($url != '') {
+
+if (!empty($url)) {
     header("Location: $url");
     die();
 }

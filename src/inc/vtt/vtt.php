@@ -1,6 +1,6 @@
 <?php
 
-if (count(get_included_files()) == 1) {
+if (count(get_included_files()) === 1) {
     die();
 }
 
@@ -45,21 +45,26 @@ class Vtt {
         $time_elapsed    = 0;
 
         echo "WEBVTT\n\n";
+
         for ($i = 0; $i <= $this->total_links; $i++) {
             $current_col = 1;
             $current_row = 1;
+
             for ($j = 0; $j < $thumbs_per_link; $j++) {
                 $from = gmdate('H:i:s', $time_elapsed);
-                if ($this->type_thumb == 'single') {
+
+                if ($this->type_thumb === 'single') {
                     $thumb_url = $this->thumb_base_url;
                     $time_elapsed += ($this->duration / $thumbs_per_link);
                 } else {
                     if ($time_elapsed >= $this->duration) {
                         break;
                     }
+
                     $time_elapsed += $this->sampling_frequency;
                     $thumb_url = $this->thumb_base_url . $i . '.jpg';
                 }
+
                 if ($this->encode) {
                     $path      = HOST . dirname($_SERVER['PHP_SELF']);
                     $path      = explode('/', $path);
@@ -67,16 +72,20 @@ class Vtt {
                     $path      = implode('/', $path);
                     $thumb_url = $path . '/redirect/' . (new Encryption('vtt', false))->encrypt($thumb_url);
                 }
+
                 $to = gmdate('H:i:s', $time_elapsed);
+
                 echo "$from.000 --> $to.000\n$thumb_url#xywh={$this->x},{$this->y},{$this->w},{$this->h}\n\n";
-                if ($current_col == $this->cols) {
-                    if ($current_row == $this->rows) {
+
+                if ($current_col === $this->cols) {
+                    if ($current_row === $this->rows) {
                         $current_row = 1;
                         $this->y     = 0;
                     } else {
                         $this->y += $this->thumb_height;
                         $current_row++;
                     }
+
                     $current_col = 1;
                     $this->x     = 0;
                 } else {
