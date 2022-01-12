@@ -12,7 +12,7 @@ header('Content-type: text/vtt');
 header("Expires: $ts");
 header('Pragma: cache');
 header("Cache-Control: max-age=$seconds_to_cache");
-Header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: *');
 
 if (empty($_GET['data'])) {
     die();
