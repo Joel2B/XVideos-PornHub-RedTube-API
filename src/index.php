@@ -17,9 +17,6 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
 header('Content-Type: application/json');
 
-include 'config.php';
-include 'inc/video.php';
-
 $data = [];
 
 if (!empty($_GET['data'])) {
@@ -30,6 +27,9 @@ if (!empty($_GET['data'])) {
 } else {
     die();
 }
+
+include 'config.php';
+include 'inc/video.php';
 
 $video = new Video($data);
 $data  = $video->get_links();

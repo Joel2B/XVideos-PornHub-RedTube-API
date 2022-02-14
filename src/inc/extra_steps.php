@@ -34,6 +34,7 @@ class Extra_steps extends Extra_methods {
         $data = '',
         $own_server = ''
     ) {
+        $this->server_id    = $server_id;
         $this->full_content = $full_content;
         $this->data         = $data;
         $this->own_server   = $own_server;

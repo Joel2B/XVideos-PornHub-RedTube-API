@@ -8,7 +8,7 @@ class Cache {
     public $expiration_time;
     public $data;
 
-    public function __construct($site_id, $video_id, $expiration_time) {
+    public function __construct($id, $expiration_time) {
         $path = realpath(dirname(__FILE__)) . '/' . self::CACHE_DIR . '/';
 
         if (!file_exists($path)) {
@@ -16,7 +16,7 @@ class Cache {
         }
 
         $this->expiration_time = $expiration_time;
-        $this->cache_file      = $path . bin2hex($site_id[0] . $video_id) . self::CACHE_FILE_EXT;
+        $this->cache_file      = $path . $id . self::CACHE_FILE_EXT;
     }
 
     public function check() {
@@ -43,10 +43,6 @@ class Cache {
     }
 
     public function save($data) {
-        if (defined('DEBUG')) {
-            return;
-        }
-
         $data['time'] = time() + $this->expiration_time;
 
         file_put_contents($this->cache_file, json_encode($data, JSON_FORCE_OBJECT));

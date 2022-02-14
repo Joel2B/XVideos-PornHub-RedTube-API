@@ -1,0 +1,20 @@
+{
+    "xvideos": {
+        "url": "^https:\/\/www\\.xvideos\\..*(?:video|\/)(\\d+)",
+        "cookie": {
+            "expiration_time": 86400
+        }
+    },
+    "pornhub": {
+        "url": "^https:\/\/www\\.pornhub\\..*(?:=|\/)(ph\\w+)",
+        "cookie": {
+            "expiration_time": 86400
+        }
+    },
+    "redtube": {
+        "url": "^https:\/\/www\\.redtube\\..*(?:\/|=)(\\d+)",
+        "cookie": {
+            "expiration_time": 86400
+        }
+    }
+}

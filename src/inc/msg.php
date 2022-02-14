@@ -4,7 +4,7 @@ class _msg {
     public static $msg_counter = 0;
 
     public static function msg($title = '', $msg = '', $encode = true) {
-        if (!defined('DEBUG') || !DEBUG) {
+        if (!defined('DEBUG')) {
             return;
         }
 

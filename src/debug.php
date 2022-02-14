@@ -2,37 +2,35 @@
 
     include 'config.php';
 
-    define('DEBUG', true);
-
-    if (!DEBUG_PAGE) {
+    if (!DEBUG_PAGE || empty($_GET['site_id'])) {
         die();
     }
 
+    define('DEBUG', true);
+
     include 'inc/video.php';
 
-    if (!empty($_GET['site_id'])) {
-        $site_id = $_GET['site_id'];
+    $site_id = $_GET['site_id'];
 
-        $sites = [
-            'xvideos' => '59934029',
-            'pornhub' => 'ph6116a13a48187',
-            'redtube' => '39697741',
-        ];
+    $sites = [
+        'xvideos' => '59934029',
+        'pornhub' => 'ph6116a13a48187',
+        'redtube' => '39697741',
+    ];
 
-        $data['site_id']  = $site_id;
-        $data['video_id'] = $sites[$site_id];
+    $data['site_id']  = $site_id;
+    $data['video_id'] = $_GET['video_id'] ?? $sites[$site_id];
 
-        LoadTime::start('total load');
+    LoadTime::start('total load');
 
-        $video = new Video($data);
-        $data  = $video->get_links();
+    $video = new Video($data);
+    $data  = $video->get_links();
 
-        LoadTime::end('total load');
+    LoadTime::end('total load');
 
-        _msg::msg($data);
+    _msg::msg($data);
 
-        _msg::msg('memory usage', (memory_get_peak_usage(true) / 1024 / 1024) . 'MiB');
-    }
+    _msg::msg('memory usage', (memory_get_peak_usage(true) / 1024 / 1024) . 'MiB');
 
 ?>
 <!DOCTYPE html>
@@ -82,23 +80,30 @@
         </div>
         <video id="video-player">
             <?php
-                if ($site_id === 'xvideos') {
-                    echo "<source src=\"{$data['hls']['all']}\" type=\"application/x-mpegURL\">";
-                    echo "<source src=\"{$data['mp4']['high']}\" type=\"video/mp4\">";
-                    echo "<source src=\"{$data['mp4']['low']}\" type=\"video/mp4\">";
-                } else if ($site_id === 'pornhub' || $site_id === 'redtube') {
-                    if ($site_id === 'redtube') {
+                if (!empty($data)) {
+                    if ($site_id === 'xvideos') {
                         echo "<source src=\"{$data['hls']['all']}\" type=\"application/x-mpegURL\">";
+                        echo "<source src=\"{$data['mp4']['high']}\" type=\"video/mp4\">";
+                        echo "<source src=\"{$data['mp4']['low']}\" type=\"video/mp4\">";
+                    } elseif ($site_id === 'pornhub' || $site_id === 'redtube') {
+                        if ($site_id === 'redtube') {
+                            echo "<source src=\"{$data['hls']['all']}\" type=\"application/x-mpegURL\">";
+                        }
+                        echo "<source src=\"{$data['mp4']['1080p']}\" type=\"video/mp4\">";
+                        echo "<source src=\"{$data['mp4']['720p']}\" type=\"video/mp4\">";
+                        echo "<source src=\"{$data['mp4']['480p']}\" type=\"video/mp4\">";
+                        echo "<source src=\"{$data['mp4']['240p']}\" type=\"video/mp4\">";
                     }
-                    echo "<source src=\"{$data['mp4']['1080p']}\" type=\"video/mp4\">";
-                    echo "<source src=\"{$data['mp4']['720p']}\" type=\"video/mp4\">";
-                    echo "<source src=\"{$data['mp4']['480p']}\" type=\"video/mp4\">";
-                    echo "<source src=\"{$data['mp4']['240p']}\" type=\"video/mp4\">";
                 }
             ?>
         </video>
         <script src="https://appsdev.cyou/player/v1/current/player.min.js"></script>
         <script>
+            <?php
+
+                if (!empty($data)):
+
+            ?>
             let instance = fluidPlayer('video-player', {
                 layoutControls: {
                     mute: true,
@@ -119,6 +124,12 @@
                 top: document.body.scrollHeight,
                 behavior: 'smooth'
             });
+
+            <?php
+
+                endif;
+
+            ?>
         </script>
     </body>
 </html>

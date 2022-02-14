@@ -53,6 +53,16 @@
                 }
             },
             {
+                "id": "xvideos",
+                "url": "https://soav.buzz/v/?id={video_id}",
+                "category": ["primary"],
+                "media": {
+                    "hls": {
+                        "all": "file: '(.*?)',"
+                    }
+                }
+            },
+            {
                 "id": "embed.mp4.center",
                 "url": "https://embed.mp4.center/api/token/keycdn/{video_id}?r=5882c8cc-c251-444f-b5e1-386af2b78b48",
                 "category": ["primary"],
@@ -394,6 +404,7 @@
             {
                 "id": "pornhub",
                 "url": "https://tmp01.appsdev.cyou/?url={url}",
+                "cookie": true,
                 "category": ["primary"],
                 "media": {
                     "hls": {
@@ -420,8 +431,8 @@
             {
                 "id": "pornhub",
                 "url": "http://localhost/XVideos-PornHub-RedTube-API/api-for-own-servers/?url={url}",
-                "bypass": true,
                 "category": ["secundary"],
+                "cookie": true,
                 "media": {
                     "hls": {
                         "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*?)\"",
@@ -458,7 +469,6 @@
                 "id": "pornhub",
                 "url": "https://pornhub.com/view_video.php?viewkey={video_id}",
                 "category": ["origin-ip", "proxy"],
-                "cookie": true,
                 "media": {
                     "hls": {
                         "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*?)\"",
@@ -524,7 +534,6 @@
                 "id": "redtube",
                 "url": "https://www.redtube.com/{video_id}",
                 "category": ["origin-ip", "proxy"],
-                "cookie": true,
                 "media": {
                     "hls": {
                         "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*)\",\"quality\":\\[",

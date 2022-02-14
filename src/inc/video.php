@@ -66,7 +66,7 @@ class Video {
     }
 
     public function get_data() {
-        if ($this->cache->check_cache()) {
+        if ($this->cache->check()) {
             $this->metadata = $this->cache->data;
 
             return;
@@ -169,9 +169,9 @@ class Video {
 
             // if the necessary data is obtained, the search is stopped
             if (!$continue) {
-                if (!$this->cache->check_cache()) {
+                if (!$this->cache->check()) {
                     if (!Utils::is_empty_array($this->metadata['media'])) {
-                        $this->cache->save_cache($this->metadata);
+                        $this->cache->save($this->metadata);
                     }
                 }
 
@@ -209,13 +209,12 @@ class Video {
                 $url = str_replace('{url}', urlencode($url), $server['url']);
 
                 if ($cookie) {
-                    $url .= '&cookie=create';
+                    $url .= "&cookie_action=write&cookie_id={$server['id']}";
                 }
             }
 
             $urls[$server_index] = [
                 'url'    => $url,
-                'cookie' => $cookie,
                 'bypass' => $bypass,
             ];
 

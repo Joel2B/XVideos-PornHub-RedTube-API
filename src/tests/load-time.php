@@ -9,7 +9,7 @@ class LoadTime {
     public static $start;
 
     public static function start($id) {
-        if (!defined('DEBUG') || !DEBUG) {
+        if (!defined('DEBUG')) {
             return;
         }
 
@@ -17,7 +17,7 @@ class LoadTime {
     }
 
     public static function end($id) {
-        if (!defined('DEBUG') || !DEBUG) {
+        if (!defined('DEBUG')) {
             return;
         }
 

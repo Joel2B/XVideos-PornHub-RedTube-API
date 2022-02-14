@@ -1,44 +1,33 @@
 <?php
 
-require_once 'HTTP/Request2.php';
+// TODO: security, legibility and more
 
-function get_url_content($url, $create_cookie) {
-    $request = new HTTP_Request2();
+$allowed_ips = [
+    '*',
+];
 
-    $request->setUrl($url);
-    $request->setMethod(HTTP_Request2::METHOD_GET);
-    $request->setConfig(array(
-        'follow_redirects' => true,
-    ));
+$user_ip = $_SERVER['REMOTE_ADDR'];
 
-    if (!$create_cookie) {
-        $cookies = json_decode(file_get_contents('tmp/cookies.txt'), true);
-
-        foreach ($cookies as $cookie) {
-            $request->addCookie($cookie['name'], $cookie['value']);
-        }
-    }
-
-    $response = $request->send();
-
-    if ($response->getStatus() == 200) {
-        if ($create_cookie) {
-            file_put_contents('tmp/cookies.txt', json_encode($response->getCookies()));
-        }
-
-        return $response->getBody();
-    }
-
-    return '';
+if (!in_array($user_ip, $allowed_ips) && !in_array('*', $allowed_ips)) {
+    die();
 }
 
 if (empty($_GET['url'])) {
     die();
 }
 
-$url           = $_GET['url'];
-$create_cookie = isset($_GET['cookie']) && $_GET['cookie'] === 'create';
+include 'HTTP/Request2.php';
+include 'config.php';
+include 'server.php';
+
+$url    = $_GET['url'];
+$cookie = [
+    'action' => $_GET['cookie_action'] ?? 'read',
+    'id'     => $_GET['cookie_id'] ?? '',
+];
+
+$server = new Server($url, $cookie);
 
 header('Content-type: text/plain');
 
-echo get_url_content($url, $create_cookie);
+echo $server->get_content();

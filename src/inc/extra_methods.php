@@ -55,7 +55,9 @@ class Extra_methods {
         $link = substr($link, 0, strlen($link) - 1) . $format;
 
         if (!empty($this->own_server)) {
-            $url               = str_replace('{url}', urlencode($link), $this->own_server);
+            $url = str_replace('{url}', urlencode($link), $this->own_server);
+            $url .= '&cookie_id=' . $this->server_id;
+
             $this->new_content = Utils::get_url_content($url, false, true);
         } else {
             $this->new_content = Utils::get_url_content($link, true);

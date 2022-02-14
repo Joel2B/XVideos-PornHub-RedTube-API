@@ -3,7 +3,7 @@
 include 'user_agent.php';
 
 class Utils {
-    public static function get_url_content($url, $cookie = false, $bypass = false) {
+    public static function get_url_content($url, $bypass = false) {
         $user_agent = \Campo\UserAgent::random(array('device_type' => 'Desktop'));
         $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? $user_agent;
 
@@ -27,10 +27,6 @@ class Utils {
 
         if ($bypass) {
             $options[CURLOPT_COOKIE] = self::get_url_content(BYPASS_URL . '/?url=' . $url);
-        }
-
-        if ($cookie) {
-            $options[CURLOPT_COOKIEFILE] = dirname(__FILE__) . '/tmp/cookie.txt';
         }
 
         curl_setopt_array($curl, $options);
@@ -98,10 +94,6 @@ class Utils {
                 if (!empty($cookie)) {
                     $options[CURLOPT_COOKIE] = $cookie;
                 }
-            }
-
-            if ($data['cookie']) {
-                $options[CURLOPT_COOKIEJAR] = dirname(__FILE__) . '/tmp/cookie.txt';
             }
 
             curl_setopt_array($curl[$id], $options);
