@@ -1,5 +1,6 @@
 <?php
 
+include 'utils.php';
 include 'cache.php';
 
 class Server {
@@ -39,7 +40,7 @@ class Server {
     }
 
     public function check_data() {
-        $sites_info = json_decode(file_get_contents(SITES_INFO), true);
+        $sites_info = json_decode(get_url_content(SITES_INFO), true);
 
         $this->site_info = $sites_info[$this->cookie_data['id']] ?? null;
 
@@ -63,7 +64,7 @@ class Server {
             return;
         }
 
-        $this->cookie_bypass = file_get_contents($this->bypass_url);
+        $this->cookie_bypass = get_url_content($this->bypass_url);
 
         if ($this->cookie_bypass !== 'null=null') {
             $this->cookie_data['bypass'] = $this->cookie_bypass;
@@ -71,7 +72,7 @@ class Server {
     }
 
     public function set_cookie_bypass() {
-        if (isset($this->cookie_data['bypass'])) {
+        if (isset($this->cookie_data['bypass']) && !empty($this->cookie_data['bypass'])) {
             $cookie_bypass = explode('=', $this->cookie_data['bypass']);
             $this->request->addCookie($cookie_bypass[0], $cookie_bypass[1]);
         }
@@ -100,7 +101,7 @@ class Server {
         $attempts = 10;
 
         while ($attempts > 0) {
-            $cookie_bypass = file_get_contents($this->bypass_url . '&force=1');
+            $cookie_bypass = get_url_content($this->bypass_url . '&force=1');
 
             if ($cookie_bypass !== 'null=null') {
                 $this->cookie_data['bypass'] = $cookie_bypass;
@@ -122,6 +123,10 @@ class Server {
         $this->request->setMethod(HTTP_Request2::METHOD_GET);
         $this->request->setConfig(array(
             'follow_redirects' => true,
+            'connect_timeout'  => CONNECTTIMEOUT,
+            'timeout'          => TIMEOUT,
+            'ssl_verify_peer'  => false,
+            'ssl_verify_host'  => false,
         ));
     }
 
@@ -151,8 +156,12 @@ class Server {
         }
 
         if ($this->cookie_data['action'] === 'write' && !$this->cache->check()) {
-            $this->write_cookie($response->getCookies());
-            $this->cookie_written = true;
+            $cookies = $response->getCookies();
+
+            if (!empty($cookies)) {
+                $this->write_cookie($cookies);
+                $this->cookie_written = true;
+            }
         }
     }
 
