@@ -15,14 +15,13 @@ class Utils {
             CURLOPT_URL            => $url,
             CURLOPT_USERAGENT      => $user_agent,
             CURLOPT_AUTOREFERER    => true,
-            CURLOPT_FRESH_CONNECT  => true,
+            CURLOPT_FRESH_CONNECT  => false,
             CURLOPT_HTTPHEADER     => $headers,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS      => 10,
             CURLOPT_CONNECTTIMEOUT => CONNECTTIMEOUT,
             CURLOPT_TIMEOUT        => TIMEOUT,
             CURLOPT_RETURNTRANSFER => true,
-            // CURLOPT_SSL_VERIFYPEER => false
         ];
 
         if ($bypass) {
@@ -39,8 +38,8 @@ class Utils {
     }
 
     public static function get_redirect_url($url) {
-        $ch      = curl_init($url);
-        
+        $ch = curl_init($url);
+
         $options = [
             CURLOPT_HEADER         => false,
             CURLOPT_NOBODY         => true,
@@ -78,14 +77,13 @@ class Utils {
             $options = [
                 CURLOPT_USERAGENT      => $user_agent,
                 CURLOPT_AUTOREFERER    => true,
-                CURLOPT_FRESH_CONNECT  => true,
+                CURLOPT_FRESH_CONNECT  => false,
                 CURLOPT_HTTPHEADER     => $headers,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_MAXREDIRS      => 5,
                 CURLOPT_CONNECTTIMEOUT => CONNECTTIMEOUT,
                 CURLOPT_TIMEOUT        => TIMEOUT,
                 CURLOPT_RETURNTRANSFER => true,
-                // CURLOPT_SSL_VERIFYPEER => false
             ];
 
             if ($data['bypass']) {
@@ -121,7 +119,7 @@ class Utils {
     }
 
     public static function get_http_code($url) {
-        $ch      = curl_init($url);
+        $ch = curl_init($url);
 
         $options = [
             CURLOPT_HEADER         => true,
@@ -141,7 +139,7 @@ class Utils {
         return $http_code;
     }
 
-    public static function match($regex, $content) {
+    public static function _match($regex, $content) {
         preg_match('#' . $regex . '#', $content, $match);
         return $match[1] ?? null;
     }

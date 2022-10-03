@@ -57,11 +57,10 @@ class Extra_methods {
         if (!empty($this->own_server)) {
             $url = str_replace('{url}', urlencode($link), $this->own_server);
             $url .= '&cookie_id=' . $this->server_id;
-
-            $this->new_content = Utils::get_url_content($url, false, true);
-        } else {
-            $this->new_content = Utils::get_url_content($link, true);
+            $link = $url;
         }
+
+        $this->new_content = Utils::get_url_content($link, true);
 
         $this->tmp = $this->data;
 
@@ -201,16 +200,16 @@ class Extra_methods {
     public function get_thumnails_xv() {
         $this->data['thumbnails'] = '';
 
-        $thumb = $this->data['thumb'];
+        $thumb    = $this->data['thumb'];
+        $duration = $this->data['duration'];
 
-        if (empty($thumb)) {
+        if (empty($thumb) || !is_numeric($duration)) {
             $this->new_content = $this->data;
             return;
         }
 
         $thumb       = str_replace(['poster', 'lll', 'll'], ['', '', ''], $thumb);
         $thumb       = substr($thumb, 0, strrpos($thumb, '/') + 1);
-        $duration    = $this->data['duration'];
         $total_links = 0;
 
         if ($duration <= 60 || Utils::get_http_code($thumb . 'mozaiquemin_0.jpg') === 404) {

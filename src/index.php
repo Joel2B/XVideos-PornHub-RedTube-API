@@ -1,6 +1,8 @@
 <?php
 
-if (isset($_SERVER['HTTP_ORIGIN'])) {
+include 'config.php';
+
+if (CORS && isset($_SERVER['HTTP_ORIGIN'])) {
     $origin = $_SERVER['HTTP_ORIGIN'];
 
     $allowed_domains = [
@@ -10,10 +12,13 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
     if (in_array($origin, $allowed_domains, true)) {
         header("Access-Control-Allow-Origin: $origin");
-        header('Access-Control-Allow-Methods: GET');
-        header('Access-Control-Allow-Headers: Content-Type');
     }
+} else {
+    header("Access-Control-Allow-Origin: *");
 }
+
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: Content-Type');
 
 header('Content-Type: application/json');
 
@@ -28,7 +33,6 @@ if (!empty($_GET['data'])) {
     die();
 }
 
-include 'config.php';
 include 'inc/video.php';
 
 $video = new Video($data);

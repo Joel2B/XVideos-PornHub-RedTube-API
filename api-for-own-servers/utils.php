@@ -6,7 +6,7 @@ function get_url_content($url) {
     $options = array(
         CURLOPT_URL            => $url,
         CURLOPT_AUTOREFERER    => true,
-        CURLOPT_FRESH_CONNECT  => true,
+        CURLOPT_FRESH_CONNECT  => false,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_MAXREDIRS      => 10,
         CURLOPT_CONNECTTIMEOUT => CONNECTTIMEOUT,

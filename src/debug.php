@@ -2,7 +2,7 @@
 
     include 'config.php';
 
-    if (!DEBUG_PAGE || empty($_GET['site_id'])) {
+    if (!DEBUG_PAGE) {
         die();
     }
 
@@ -10,10 +10,10 @@
 
     include 'inc/video.php';
 
-    $site_id = $_GET['site_id'];
+    $site_id = $_GET['site_id'] ?? 'xvideos';
 
     $sites = [
-        'xvideos' => '59934029',
+        'xvideos' => '46318431',
         'pornhub' => 'ph6116a13a48187',
         'redtube' => '39697741',
     ];

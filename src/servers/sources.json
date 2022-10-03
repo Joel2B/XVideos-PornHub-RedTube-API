@@ -102,6 +102,52 @@
                 }
             },
             {
+                "id": "videoscdn",
+                "url": "https://videoscdn.online/applyVideo.php?data={video_id}",
+                "category": ["primary"],
+                "media": {
+                    "hls": {
+                        "all": "videoUrl\":\"(.*?)\""
+                    },
+                    "mp4": {
+                        "low": "lowUrl\":\"(.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "videoImage\":\"(.*?)\""
+                }
+            },
+            {
+                "id": "ahvideoscdn",
+                "url": "https://ahvideoscdn.net/applyVideo.php?data={video_id}",
+                "category": ["primary"],
+                "media": {
+                    "hls": {
+                        "all": "videoUrl\":\"(.*?)\""
+                    },
+                    "mp4": {
+                        "low": "lowUrl\":\"(.*?)\""
+                    }
+                },
+                "data": {
+                    "thumb": "videoImage\":\"(.*?)\""
+                }
+            },
+            {
+                "id": "xvideos",
+                "url": "https://xvideos.wptri.com/video{video_id}/_",
+                "category": ["primary"],
+                "media": {
+                    "hls": {
+                        "all": "VideoHLS\\('(.*?)'\\)"
+                    }
+                },
+                "data": {
+                    "thumb": "ThumbUrl169\\('(.*?)'\\)",
+                    "duration": "duration\" content=\"(.*?)\""
+                }
+            },
+            {
                 "id": "embed.mp4.center2",
                 "url": "https://embed.mp4.center/api/token/bunnycdn/{video_id}?r=5882c8cc-c251-444f-b5e1-386af2b78b48",
                 "category": ["secundary"],
@@ -533,7 +579,7 @@
             {
                 "id": "redtube",
                 "url": "https://www.redtube.com/{video_id}",
-                "category": ["origin-ip", "proxy"],
+                "category": ["primary", "origin-ip", "proxy"],
                 "media": {
                     "hls": {
                         "all": "(https:\\\\/\\\\/\\D+\\\\/hls\\\\/videos\\\\/\\d+\\\\/\\d+\\\\/\\d+\\\\/,.*\\\\/master\\.m3u8.*)\",\"quality\":\\[",

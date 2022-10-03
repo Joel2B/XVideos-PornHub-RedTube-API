@@ -58,11 +58,11 @@ class Video {
     }
 
     public function get_site_id($data) {
-        return Utils::match('(?:\.|^)(\w+)\..*\/', $data);
+        return Utils::_match('(?:\.|^)(\w+)\..*\/', $data);
     }
 
     public function get_video_id($regex, $data) {
-        return Utils::match($regex, $data);
+        return Utils::_match($regex, $data);
     }
 
     public function get_data() {
@@ -120,7 +120,7 @@ class Video {
                             }
 
                             $data = &$this->metadata['media'][$format_index][$quality_index];
-                            $url  = Utils::match($quality, $content);
+                            $url  = Utils::_match($quality, $content);
                             $url  = Utils::clear_url($url);
 
                             if (!Utils::is_url($url)) {
@@ -144,7 +144,7 @@ class Video {
                         }
 
                         $data = &$this->metadata['data'][$data_index];
-                        $url  = Utils::match($video_data, $content);
+                        $url  = Utils::_match($video_data, $content);
                         $url  = Utils::clear_url($url);
 
                         if ($url === '') {
