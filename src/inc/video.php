@@ -1,11 +1,10 @@
 <?php
 
-include 'utils.php';
-include 'cache.php';
-include 'extra_steps.php';
-
-include 'tests/load-time.php';
-include 'msg.php';
+include ABSPATH . INC . 'utils.php';
+include ABSPATH . INC . 'cache.php';
+include ABSPATH . INC . 'extra_steps.php';
+include ABSPATH . INC . 'performance.php';
+include ABSPATH . INC . 'debug.php';
 
 class Video {
     public $site_id;
@@ -92,22 +91,30 @@ class Video {
         // add all the data that need to be filled out
         Utils::get_deeper_keys($this->metadata, $missing_data);
 
-        _msg::msg('missing_data', $missing_data);
+        Debug::log('missing_data', $missing_data);
+
+        Debug::openSection('categories');
 
         // cycle all the categories until we get all the data
-        foreach ($categories as $key => $category) {
-            _msg::msg("Category: $key - $category");
+        foreach ($categories as $category) {
+            Debug::openSection();
+
+            Debug::log('category', $category);
+
+            Performance::now('content');
 
             // get the content of all sites in a category
             $content  = $this->get_links_content($category);
             $continue = false;
 
-            LoadTime::start('lc');
+            Debug::log('load_time', Performance::now('content'));
 
-            foreach ($content as $server_index => $full_content) {
+            Performance::now('processing');
+
+            foreach ($content as $server_index => $server_data) {
                 $server     = $this->sources[$this->site_id]['servers'][$server_index];
                 $own_server = preg_match('/{url}/', $server['url']) ? $server['url'] : '';
-                $content    = $full_content;
+                $content    = $server_data['content'];
 
                 // media
                 if (isset($server['media'])) {
@@ -115,7 +122,7 @@ class Video {
 
                     foreach ($media as $format_index => $format) {
                         foreach ($format as $quality_index => $quality) {
-                            if ($this->extra_steps->extra_steps('media', $server['id'], $full_content, $format_index, $own_server)) {
+                            if ($this->extra_steps->extra_steps('media', $server['id'], $server_data['content'], $format_index, $own_server)) {
                                 $content = $this->extra_steps->new_content;
                             }
 
@@ -139,7 +146,7 @@ class Video {
                 // data
                 if (isset($server['data'])) {
                     foreach ($server['data'] as $data_index => $video_data) {
-                        if ($this->extra_steps->extra_steps('data', $server['id'], $full_content, $data_index)) {
+                        if ($this->extra_steps->extra_steps('data', $server['id'], $server_data['content'], $data_index)) {
                             $content = $this->extra_steps->new_content;
                         }
 
@@ -156,12 +163,15 @@ class Video {
                             $data = $url;
                             Utils::remove_missing_data($data_index, $missing_data);
                         }
-                    }}
+                    }
+                }
             }
 
-            LoadTime::end('lc');
+            Debug::log('load_time', Performance::now('processing'));
 
-            _msg::msg('missing_data', $missing_data);
+            Debug::log('missing_data', $missing_data);
+
+            Debug::closeSection();
 
             if (Utils::in_array_any($this->data['include'], $missing_data)) {
                 $continue = true;
@@ -178,6 +188,8 @@ class Video {
                 break;
             }
         }
+
+        Debug::closeSection();
     }
 
     public function get_links_content($category) {
@@ -218,10 +230,15 @@ class Video {
                 'bypass' => $bypass,
             ];
 
-            _msg::msg('URL', "<a style='color: #0000ee' target='_blank' href='$url'>$url</a>", false);
         }
 
-        return Utils::get_multiple_urls($urls);
+        $content = Utils::get_multiple_urls($urls);
+
+        foreach ($content as $server_index => $server_data) {
+            Debug::log('server_data', $server_data);
+        }
+
+        return $content;
     }
 
     public function get_derived_data() {
@@ -238,8 +255,10 @@ class Video {
 
     public function get_links() {
         $this->get_data();
+        Performance::now('process_content2');
         $this->get_derived_data();
         $this->remove_useful_data();
+        Performance::now('process_content2');
 
         return $this->metadata;
     }

@@ -1,0 +1,49 @@
+debug
+    video
+        <lado izq>
+            id del sitio
+            id del video
+            enlace del video
+            boton de buscar
+            mostrar el contenido de cada servidor
+                acordeon del contenido
+                boton de copiar
+            lista de los servidores que se usaron
+                si en el servidor obtuvo algún campo, se resalta
+        <lado der>
+            mostrar video
+listar videos cacheados
+    info de videos cacheados
+        total
+            videos cacheados
+            videos vigentes
+            videos actualizados
+            tamaño de los archivos de videos cacheados
+    buscador
+        nombre del archivo del video
+            raw
+            decodificado
+    paginador
+        filtro
+            tamaño del archivo
+                asc
+                desc
+        nombre del archivo de video
+            raw
+            decodificado
+        fecha de creación
+        tamaño del archivo
+        contenido del archivo
+            raw
+            parse (js)
+                mostrar enlaces
+        veces que ha sido actualizado
+        estatus
+            expirado (rojo), tiempo expirado
+            vigente (verde), tiempo restante
+errores
+    lista de errores de los servicios
+        api principal
+        api remoto
+cloudflare
+    total ancho de banda

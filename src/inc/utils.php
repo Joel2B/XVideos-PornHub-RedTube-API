@@ -100,16 +100,16 @@ class Utils {
 
         $running = null;
 
-        LoadTime::start('gmu');
-
         do {
             curl_multi_exec($mh, $running);
         } while ($running);
 
-        LoadTime::end('gmu');
+        foreach ($urls as $id => $data) {
+            $result[$id] = [
+                'url'     => $data['url'],
+                'content' => curl_multi_getcontent($curl[$id]),
+            ];
 
-        foreach ($urls as $id => $url) {
-            $result[$id] = curl_multi_getcontent($curl[$id]);
             curl_multi_remove_handle($mh, $curl[$id]);
         }
 
@@ -231,17 +231,17 @@ class Utils {
         return $empty;
     }
 
-    public static function get_image_size($img) {
-        $img_data = getimagesize($img);
+    public static function get_last_key($array, $n = 1) {
+        return key(self::get_last_element($array, $n));
+    }
 
-        if ($img_data) {
-            preg_match('/width="(.*?)"/', $img_data[3], $tmp);
-            $width = $tmp[1];
+    public static function get_last_element(&$array, $n = 1, $remove = false) {
+        $extract = array_slice($array, -$n, 1, true);
 
-            preg_match('/height="(.*?)"/', $img_data[3], $tmp);
-            $height = $tmp[1];
-
-            return ['width' => $width, 'height' => $height];
+        if ($remove) {
+            array_pop($array);
         }
+
+        return $extract;
     }
 }

@@ -20,7 +20,7 @@ class Cache {
     }
 
     public function check() {
-        if (!file_exists($this->cache_file)) {
+        if (defined('_DEBUG') || !file_exists($this->cache_file)) {
             return false;
         }
 
@@ -43,7 +43,7 @@ class Cache {
     }
 
     public function save($data) {
-        if (defined('DEBUG')) {
+        if (defined('_DEBUG')) {
             return;
         }
 

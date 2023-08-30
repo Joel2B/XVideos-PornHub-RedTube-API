@@ -1,0 +1,41 @@
+.wrapper {
+  margin-top: 80px;
+}
+
+.wrapper-video {
+  top: 80px;
+}
+
+.wrapper-video video {
+  background-color: #868e96;
+}
+
+#current-site {
+  cursor: inherit;
+}
+
+#current-site:hover {
+  color: #6c757d;
+  background-color: inherit;
+}
+
+.placeholder {
+  z-index: -1 !important;
+}
+
+.btn-outline-secondary,
+.form-control,
+.border-primary {
+  border-color: #dee2e6 !important;
+}
+
+.accordion-body {
+  word-break: break-all;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.hidden {
+  visibility: hidden;
+}

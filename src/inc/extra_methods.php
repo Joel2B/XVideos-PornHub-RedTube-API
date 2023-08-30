@@ -2,7 +2,7 @@
 
 class Extra_methods {
     public function pornhub() {
-        LoadTime::start($this->data);
+        Performance::now($this->data);
 
         // this avoids making more requests
         if ($this->tmp === $this->data) {
@@ -64,11 +64,11 @@ class Extra_methods {
 
         $this->tmp = $this->data;
 
-        LoadTime::end($this->data);
+        Performance::now($this->data);
     }
 
     public function redtube() {
-        LoadTime::start($this->data);
+        Performance::now($this->data);
 
         // this avoids making more requests
         if ($this->tmp === $this->data) {
@@ -90,13 +90,13 @@ class Extra_methods {
 
         $this->tmp = $this->data;
 
-        LoadTime::end($this->data);
+        Performance::now($this->data);
     }
 
     public function ms() {
         $this->new_content = null;
 
-        LoadTime::start('mothersleep');
+        Performance::now('mothersleep');
 
         if (!preg_match('/source/', $this->full_content, $match)) {
             return;
@@ -140,11 +140,11 @@ class Extra_methods {
             }
         }
 
-        LoadTime::end('mothersleep');
+        Performance::now('mothersleep');
     }
 
     public function iporntv() {
-        LoadTime::start('iporntv');
+        Performance::now('iporntv');
 
         if (!preg_match('/source/', $this->full_content, $match)) {
             return;
@@ -181,7 +181,7 @@ class Extra_methods {
             $this->new_content = Utils::get_redirect_url($link);
         }
 
-        LoadTime::end('iporntv');
+        Performance::now('iporntv');
     }
 
     public function tubebaba() {
